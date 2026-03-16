@@ -38,7 +38,7 @@ Maker Engine is built using the following technologies:
 maker-engine/
 │
 ├ source/
-│  ├ maker/
+│  ├ engine/
 │  │  ├ core/
 │  │  │  ├ Engine.hx
 │  │  │  ├ Scene.hx
