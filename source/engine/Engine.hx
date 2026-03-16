@@ -8,34 +8,67 @@ class Engine extends Sprite
 {
 	public static var instance:Engine;
 
-	// Current Scene
-	public var currentScene:Scene;
+	// =========================
+	// Engine State
+	// =========================
 
-	// Time
+	public var paused:Bool = false;
+	public var started:Bool = false;
+
+	// =========================
+	// Timing
+	// =========================
+
 	private var lastTime:Float = 0;
 	public var deltaTime:Float = 0;
+	public var elapsedTime:Float = 0;
 
-	// Engine State
-	public var paused:Bool = false;
+	// =========================
+	// Scene
+	// =========================
+
+	private var currentScene:Sprite;
 
 	public function new()
 	{
 		super();
+
 		instance = this;
 
+		addEventListener(Event.ADDED_TO_STAGE, init);
+	}
+
+	// =========================
+	// Initialization
+	// =========================
+
+	private function init(e:Event):Void
+	{
+		removeEventListener(Event.ADDED_TO_STAGE, init);
+
 		lastTime = Lib.getTimer();
+		startEngine();
+	}
+
+	private function startEngine():Void
+	{
+		started = true;
+
+		trace("Maker Engine started.");
+
 		addEventListener(Event.ENTER_FRAME, gameLoop);
 	}
 
 	// =========================
-	// GAME LOOP
+	// Game Loop
 	// =========================
 
 	private function gameLoop(e:Event):Void
 	{
-		var currentTime = Lib.getTimer();
-		deltaTime = (currentTime - lastTime) / 1000;
-		lastTime = currentTime;
+		var now = Lib.getTimer();
+
+		deltaTime = (now - lastTime) / 1000;
+		lastTime = now;
 
 		if (!paused)
 		{
@@ -46,39 +79,51 @@ class Engine extends Sprite
 	}
 
 	// =========================
-	// UPDATE
+	// Update
 	// =========================
 
-	public function update(elapsed:Float):Void
+	public function update(dt:Float):Void
 	{
+		elapsedTime += dt;
+
 		if (currentScene != null)
 		{
-			currentScene.update(elapsed);
+			if (Reflect.hasField(currentScene, "update"))
+			{
+				Reflect.callMethod(currentScene, Reflect.field(currentScene, "update"), [dt]);
+			}
 		}
 	}
 
 	// =========================
-	// RENDER
+	// Render
 	// =========================
 
 	public function render():Void
 	{
 		if (currentScene != null)
 		{
-			currentScene.render();
+			if (Reflect.hasField(currentScene, "render"))
+			{
+				Reflect.callMethod(currentScene, Reflect.field(currentScene, "render"), []);
+			}
 		}
 	}
 
 	// =========================
-	// SCENE MANAGEMENT
+	// Scene System
 	// =========================
 
-	public function setScene(scene:Scene):Void
+	public function setScene(scene:Sprite):Void
 	{
 		if (currentScene != null)
 		{
 			removeChild(currentScene);
-			currentScene.destroy();
+
+			if (Reflect.hasField(currentScene, "destroy"))
+			{
+				Reflect.callMethod(currentScene, Reflect.field(currentScene, "destroy"), []);
+			}
 		}
 
 		currentScene = scene;
@@ -86,12 +131,16 @@ class Engine extends Sprite
 		if (currentScene != null)
 		{
 			addChild(currentScene);
-			currentScene.create();
+
+			if (Reflect.hasField(currentScene, "create"))
+			{
+				Reflect.callMethod(currentScene, Reflect.field(currentScene, "create"), []);
+			}
 		}
 	}
 
 	// =========================
-	// ENGINE CONTROL
+	// Engine Control
 	// =========================
 
 	public function pause():Void
