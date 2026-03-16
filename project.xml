@@ -1,46 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 
+    <!-- ========================= -->
     <!-- Metadata -->
+    <!-- ========================= -->
+
     <meta
         title="Maker Engine"
-        description="Maker Engine - A moddable game engine built with Haxe"
+        description="A moddable game engine built with Haxe"
         package="maker.engine"
         version="0.1.0"
         company="Maker Engine Team"
     />
 
-    <!-- App -->
-    <app main="Main" file="MakerEngine" path="export"/>
+    <!-- ========================= -->
+    <!-- Application -->
+    <!-- ========================= -->
 
+    <app
+        main="Main"
+        file="MakerEngine"
+        path="export"
+    />
+
+    <!-- ========================= -->
     <!-- Window -->
+    <!-- ========================= -->
+
     <window
         width="1280"
         height="720"
         fps="60"
         background="#000000"
         hardware="true"
-        resizable="true"
         vsync="true"
+        resizable="true"
         antialiasing="4"
     />
 
+    <!-- ========================= -->
     <!-- Source -->
+    <!-- ========================= -->
+
     <source path="source"/>
 
+    <!-- ========================= -->
     <!-- Libraries -->
+    <!-- ========================= -->
+
     <haxelib name="lime"/>
     <haxelib name="openfl"/>
 
-    <!-- Defines -->
-    <define name="maker_engine"/>
-    <define name="windows_build"/>
-
+    <!-- ========================= -->
     <!-- Assets -->
+    <!-- ========================= -->
+
     <assets path="assets" rename="assets" if="exists"/>
     <assets path="mods" rename="mods" if="exists"/>
 
+    <!-- ========================= -->
     <!-- Icon -->
+    <!-- ========================= -->
+
     <icon path="arts/icon.png"/>
+
+    <!-- ========================= -->
+    <!-- Android Configuration -->
+    <!-- ========================= -->
+
+    <section if="android">
+
+        <set name="ANDROID_TARGET_SDK_VERSION" value="33"/>
+        <set name="ANDROID_MIN_SDK_VERSION" value="21"/>
+
+        <!-- Android tools extension -->
+        <haxelib name="extension-androidtools"/>
+
+    </section>
 
 </project>
