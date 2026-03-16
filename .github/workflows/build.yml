@@ -26,6 +26,7 @@ jobs:
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
+          haxelib install hxcpp --quiet
           haxelib install flixel --quiet
 
       - name: Build Windows
@@ -65,6 +66,7 @@ jobs:
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
+          haxelib install hxcpp --quiet
           haxelib install flixel --quiet
 
       - name: Setup Android SDK
