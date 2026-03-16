@@ -17,6 +17,10 @@ jobs:
         with:
           haxe-version: 4.3.4
 
+      - name: Install HXP
+        run: |
+          haxelib install hxp --quiet
+
       - name: Install Haxelib libraries
         run: |
           haxelib install lime --quiet
