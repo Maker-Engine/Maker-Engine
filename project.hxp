@@ -1,5 +1,8 @@
+import lime.project.Project;
 import lime.project.Asset;
 import lime.project.Haxelib;
+
+var project = new Project();
 
 // -----------------------------
 // Metadata
@@ -12,7 +15,7 @@ project.meta.version = "0.1.0";
 project.meta.company = "Maker Engine Team";
 
 // -----------------------------
-// App
+// Application
 // -----------------------------
 
 project.app.main = "Main";
@@ -56,18 +59,19 @@ project.defines.set("windows_build", "true");
 // Assets
 // -----------------------------
 
-if (sys.FileSystem.exists("assets"))
-{
+if (sys.FileSystem.exists("assets")) {
 	project.assets.push(new Asset("assets", "assets"));
 }
 
-if (sys.FileSystem.exists("mods"))
-{
+if (sys.FileSystem.exists("mods")) {
 	project.assets.push(new Asset("mods", "mods"));
 }
 
-if (sys.FileSystem.exists("arts/icon.png"))
-{
+if (sys.FileSystem.exists("arts/icon.png")) {
 	project.assets.push(new Asset("arts/icon.png", "icon.png"));
 	project.icons.push("arts/icon.png");
 }
+
+// -----------------------------
+
+return project;
