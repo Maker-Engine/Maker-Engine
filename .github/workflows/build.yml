@@ -24,7 +24,6 @@ jobs:
 
       - name: Install libraries
         run: |
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime --quiet
           haxelib install openfl --quiet
           haxelib install flixel --quiet
@@ -64,7 +63,6 @@ jobs:
 
       - name: Install Haxe libraries
         run: |
-          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime --quiet
           haxelib install openfl --quiet
           haxelib install flixel --quiet
@@ -85,10 +83,6 @@ jobs:
             "33" \
             "21" \
           | haxelib run lime setup android
-
-      - name: Rebuild hxcpp for Android
-        run: |
-          haxelib run lime rebuild hxcpp android
 
       - name: Build Android
         run: |
