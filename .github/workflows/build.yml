@@ -19,7 +19,7 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install haxelib dependencies
+      - name: Install libraries
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
@@ -33,11 +33,12 @@ jobs:
         run: |
           haxelib run lime build windows -release
 
-      - name: Upload Windows Artifact
+      - name: Upload Windows
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Windows
           path: export/windows/bin
+
 
   android:
     runs-on: ubuntu-latest
@@ -51,10 +52,15 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install Linux build dependencies
+      - name: Install Linux dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential clang libstdc++-12-dev
+          sudo apt install -y \
+            build-essential \
+            clang \
+            libc++-dev \
+            libc++abi-dev \
+            libstdc++-12-dev
 
       - name: Install Haxe libraries
         run: |
@@ -79,11 +85,15 @@ jobs:
         run: |
           haxelib run lime setup android
 
+      - name: Rebuild hxcpp for Android
+        run: |
+          haxelib run lime rebuild hxcpp android
+
       - name: Build Android
         run: |
           haxelib run lime build android -release
 
-      - name: Upload Android Artifact
+      - name: Upload Android
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Android
