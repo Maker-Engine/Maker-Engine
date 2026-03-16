@@ -64,7 +64,7 @@
     <!-- Icon -->
     <!-- ========================= -->
 
-    <icon path="arts/icon.png"/>   <!-- Remove if file doesn't exist yet -->
+    <icon path="arts/icon.png"/>
 
     <!-- ========================= -->
     <!-- Android Configuration -->
@@ -73,7 +73,6 @@
     <section if="android">
         <set name="ANDROID_TARGET_SDK_VERSION" value="33"/>
         <set name="ANDROID_MIN_SDK_VERSION" value="21"/>
-        <!-- Only re-add extension-androidtools if you explicitly install it -->
     </section>
 
 </project>
