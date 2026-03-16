@@ -2,6 +2,7 @@ name: Build
 
 on:
   push:
+    branches: [ main ]
   pull_request:
 
 jobs:
@@ -17,11 +18,14 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install HXP
-        run: |
-          haxelib install hxp --quiet
+      - name: Restore haxelib cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.haxelib
+          key: haxelib-${{ runner.os }}
 
-      - name: Install Haxelib libraries
+      - name: Install libraries
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
@@ -30,11 +34,11 @@ jobs:
         run: |
           haxelib run lime setup
 
-      - name: Build Windows
+      - name: Build Maker Engine (Windows)
         run: |
-          haxelib run lime build windows
+          haxelib run lime build windows -release
 
-      - name: Upload Build Artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Windows
