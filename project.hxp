@@ -1,86 +1,73 @@
-import lime.project.Asset;
-import lime.project.Haxelib;
+import lime.tools.ProjectHelper;
 
-// =====================================
+// ==============================
 // Metadata
-// =====================================
+// ==============================
 
-project.meta = {
-    title: "Maker Engine",
-    description: "Maker Engine - A moddable game engine built with Haxe",
-    packageName: "maker.engine",
-    version: "0.1.0",
-    company: "Maker Engine Team"
-};
+setMeta("title", "Maker Engine");
+setMeta("description", "Maker Engine - A moddable game engine built with Haxe");
+setMeta("packageName", "maker.engine");
+setMeta("version", "0.1.0");
+setMeta("company", "Maker Engine Team");
 
-// =====================================
+// ==============================
 // Application
-// =====================================
+// ==============================
 
-project.app = {
-    main: "Main",
-    file: "MakerEngine",
-    path: "export"
-};
+setAppMain("Main");
+setAppFile("MakerEngine");
+setAppPath("export");
 
-// =====================================
+// ==============================
 // Window
-// =====================================
+// ==============================
 
-project.window = {
-    width: 1280,
-    height: 720,
-    fps: 60,
-    background: 0x000000,
-    hardware: true,
-    resizable: true,
-    vsync: true,
-    antialiasing: 4
-};
+setWindowWidth(1280);
+setWindowHeight(720);
+setWindowFPS(60);
+setWindowBackground(0x000000);
+setWindowResizable(true);
+setWindowHardware(true);
+setWindowVsync(true);
+setWindowAntialiasing(4);
 
-// =====================================
-// Sources
-// =====================================
+// ==============================
+// Source
+// ==============================
 
-project.sources.push("source");
+addSource("source");
 
-// =====================================
+// ==============================
 // Libraries
-// =====================================
+// ==============================
 
-project.haxelibs.push(new Haxelib("lime"));
-project.haxelibs.push(new Haxelib("openfl"));
+addHaxelib("lime");
+addHaxelib("openfl");
 
-// =====================================
+// ==============================
 // Defines
-// =====================================
+// ==============================
 
-project.defines.set("maker_engine", "true");
-project.defines.set("platform_windows", "true");
+addDefine("maker_engine");
+addDefine("windows_build");
 
-// =====================================
+// ==============================
 // Assets
-// =====================================
+// ==============================
 
 if (sys.FileSystem.exists("assets"))
 {
-    project.assets.push(new Asset("assets", "assets"));
+    addAssets("assets");
 }
 
 if (sys.FileSystem.exists("mods"))
 {
-    project.assets.push(new Asset("mods", "mods"));
+    addAssets("mods");
 }
 
+// icon
 if (sys.FileSystem.exists("arts/icon.png"))
 {
-    project.assets.push(new Asset("arts/icon.png", "icon.png"));
-    project.icons.push("arts/icon.png");
+    addAssets("arts/icon.png");
+    addIcon("arts/icon.png");
 }
-
-// =====================================
-// Engine Info
-// =====================================
-
-project.defines.set("engine_name", "MakerEngine");
-project.defines.set("engine_version", "0.1.0");
