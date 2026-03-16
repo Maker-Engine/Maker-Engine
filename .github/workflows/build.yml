@@ -24,9 +24,9 @@ jobs:
 
       - name: Install libraries
         run: |
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime --quiet
           haxelib install openfl --quiet
-          haxelib install hxcpp --quiet
           haxelib install flixel --quiet
 
       - name: Build Windows
@@ -64,9 +64,9 @@ jobs:
 
       - name: Install Haxe libraries
         run: |
+          haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib install lime --quiet
           haxelib install openfl --quiet
-          haxelib install hxcpp --quiet
           haxelib install flixel --quiet
 
       - name: Setup Android SDK
