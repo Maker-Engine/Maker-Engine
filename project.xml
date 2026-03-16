@@ -48,34 +48,32 @@
     <!-- Libraries -->
     <!-- ========================= -->
 
+    <haxelib name="hxcpp"/>
     <haxelib name="lime"/>
     <haxelib name="openfl"/>
+    <haxelib name="flixel"/>
 
     <!-- ========================= -->
     <!-- Assets -->
     <!-- ========================= -->
 
-    <assets path="assets" rename="assets" if="exists"/>
-    <assets path="mods" rename="mods" if="exists"/>
+    <assets path="assets" rename="assets"/>
+    <assets path="mods" rename="mods"/>
 
     <!-- ========================= -->
     <!-- Icon -->
     <!-- ========================= -->
 
-    <icon path="arts/icon.png"/>
+    <icon path="arts/icon.png"/>   <!-- Remove if file doesn't exist yet -->
 
     <!-- ========================= -->
     <!-- Android Configuration -->
     <!-- ========================= -->
 
     <section if="android">
-
         <set name="ANDROID_TARGET_SDK_VERSION" value="33"/>
         <set name="ANDROID_MIN_SDK_VERSION" value="21"/>
-
-        <!-- Android tools extension -->
-        <haxelib name="extension-androidtools"/>
-
+        <!-- Only re-add extension-androidtools if you explicitly install it -->
     </section>
 
 </project>
