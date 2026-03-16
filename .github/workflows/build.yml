@@ -78,18 +78,13 @@ jobs:
 
       - name: Configure Lime for Android
         run: |
-          mkdir -p ~/.lime
-          cat > ~/.lime/config.xml << EOF
-          <?xml version="1.0" encoding="utf-8"?>
-          <config>
-            <section name="android">
-              <config name="ANDROID_SDK" value="$ANDROID_HOME" />
-              <config name="ANDROID_NDK_ROOT" value="$ANDROID_HOME/ndk/${{ env.ANDROID_NDK_VERSION }}" />
-              <config name="JAVA_HOME" value="$JAVA_HOME" />
-              <config name="ANDROID_TARGET_SDK_VERSION" value="33" />
-            </section>
-          </config>
-          EOF
+          printf "%s\n" \
+            "$ANDROID_HOME" \
+            "$ANDROID_HOME/ndk/${{ env.ANDROID_NDK_VERSION }}" \
+            "$JAVA_HOME" \
+            "33" \
+            "21" \
+          | haxelib run lime setup android
 
       - name: Rebuild hxcpp for Android
         run: |
