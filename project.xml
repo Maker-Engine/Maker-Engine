@@ -48,6 +48,7 @@
     <!-- Libraries -->
     <!-- ========================= -->
 
+    <haxelib name="hxcpp"/>
     <haxelib name="lime"/>
     <haxelib name="openfl"/>
     <haxelib name="flixel"/>
