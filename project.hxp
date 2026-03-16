@@ -1,0 +1,47 @@
+import lime.project.ApplicationData;
+import lime.project.Asset;
+import lime.project.Haxelib;
+import lime.project.ProjectXMLParser;
+
+var project = new lime.project.Project();
+
+project.meta = {
+    title: "Maker Engine",
+    description: "Maker Engine - A moddable game engine built with Haxe",
+    packageName: "maker.engine",
+    version: "0.1.0",
+    company: "Maker Engine Team"
+};
+
+project.app = {
+    main: "Main",
+    file: "MakerEngine",
+    path: "export"
+};
+
+project.window = {
+    width: 1280,
+    height: 720,
+    fps: 60,
+    background: 0x000000,
+    resizable: true,
+    vsync: true,
+    antialiasing: 4
+};
+
+project.sources.push("source");
+
+project.assets.push(new Asset("assets"));
+project.assets.push(new Asset("mods"));
+
+project.assets.push(new Asset("arts/icon.png"));
+
+project.icons.push("arts/icon.png");
+
+project.haxelibs.push(new Haxelib("lime"));
+project.haxelibs.push(new Haxelib("openfl"));
+
+project.defines.set("maker_engine", "true");
+project.defines.set("desktop", "true");
+
+return project;
