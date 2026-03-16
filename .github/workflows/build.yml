@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-   branches: [ main ]
+    branches: [ main ]
   pull_request:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Haxe
@@ -19,10 +19,11 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install libraries
+      - name: Install haxelib dependencies
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
+          haxelib install hxcpp --quiet
 
       - name: Setup Lime
         run: |
@@ -32,7 +33,7 @@ jobs:
         run: |
           haxelib run lime build windows -release
 
-      - name: Upload Windows Build
+      - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Windows
@@ -42,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Haxe
@@ -50,10 +51,16 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install libraries
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential clang libstdc++-12-dev
+
+      - name: Install Haxe libraries
         run: |
           haxelib install lime --quiet
           haxelib install openfl --quiet
+          haxelib install hxcpp --quiet
           haxelib install extension-androidtools --quiet
 
       - name: Setup Android SDK
@@ -63,7 +70,7 @@ jobs:
         run: |
           sdkmanager "ndk;25.2.9519653"
 
-      - name: Set Android Environment
+      - name: Set Android environment
         run: |
           echo "ANDROID_SDK=$ANDROID_HOME" >> $GITHUB_ENV
           echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
@@ -76,7 +83,7 @@ jobs:
         run: |
           haxelib run lime build android -release
 
-      - name: Upload Android Build
+      - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Android
