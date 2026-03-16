@@ -33,11 +33,15 @@ jobs:
         run: |
           haxelib run lime build windows -release
 
+      - name: Find build output
+        run: |
+          find export -type f
+
       - name: Upload Windows
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Windows
-          path: export/release/windows/bin
+          path: export/**/bin/
 
 
   android:
