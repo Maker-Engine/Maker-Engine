@@ -1,8 +1,5 @@
-import lime.project.Project;
 import lime.project.Asset;
 import lime.project.Haxelib;
-
-var project = new Project();
 
 // =====================================
 // Metadata
@@ -27,7 +24,7 @@ project.app = {
 };
 
 // =====================================
-// Window Configuration
+// Window
 // =====================================
 
 project.window = {
@@ -48,14 +45,14 @@ project.window = {
 project.sources.push("source");
 
 // =====================================
-// Haxe Libraries
+// Libraries
 // =====================================
 
 project.haxelibs.push(new Haxelib("lime"));
 project.haxelibs.push(new Haxelib("openfl"));
 
 // =====================================
-// Engine Defines
+// Defines
 // =====================================
 
 project.defines.set("maker_engine", "true");
@@ -75,7 +72,6 @@ if (sys.FileSystem.exists("mods"))
     project.assets.push(new Asset("mods", "mods"));
 }
 
-// Engine icon
 if (sys.FileSystem.exists("arts/icon.png"))
 {
     project.assets.push(new Asset("arts/icon.png", "icon.png"));
@@ -83,19 +79,8 @@ if (sys.FileSystem.exists("arts/icon.png"))
 }
 
 // =====================================
-// Debug / Release configuration
-// =====================================
-
-if (project.target == "windows")
-{
-    project.defines.set("windows_build", "true");
-}
-
-// =====================================
-// Engine Build Info
+// Engine Info
 // =====================================
 
 project.defines.set("engine_name", "MakerEngine");
 project.defines.set("engine_version", "0.1.0");
-
-return project;
