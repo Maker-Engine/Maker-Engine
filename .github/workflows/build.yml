@@ -6,6 +6,7 @@ on:
   pull_request:
 
 jobs:
+
   build-windows:
     runs-on: windows-latest
 
@@ -18,13 +19,6 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Restore haxelib cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.haxelib
-          key: haxelib-${{ runner.os }}
-
       - name: Install libraries
         run: |
           haxelib install lime --quiet
@@ -34,12 +28,47 @@ jobs:
         run: |
           haxelib run lime setup
 
-      - name: Build Maker Engine (Windows)
+      - name: Build Windows
         run: |
           haxelib run lime build windows -release
 
-      - name: Upload build artifact
+      - name: Upload Windows Build
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Windows
           path: export/windows/bin
+
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install libraries
+        run: |
+          haxelib install lime --quiet
+          haxelib install openfl --quiet
+          haxelib install extension-androidtools --quiet
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Lime Android
+        run: |
+          haxelib run lime setup android
+
+      - name: Build Android APK
+        run: |
+          haxelib run lime build android -release
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MakerEngine-Android
+          path: export/android/bin
