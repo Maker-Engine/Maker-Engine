@@ -1,9 +1,12 @@
-import lime.project.ApplicationData;
+import lime.project.Project;
 import lime.project.Asset;
 import lime.project.Haxelib;
-import lime.project.ProjectXMLParser;
 
-var project = new lime.project.Project();
+var project = new Project();
+
+// =====================================
+// Metadata
+// =====================================
 
 project.meta = {
     title: "Maker Engine",
@@ -13,35 +16,86 @@ project.meta = {
     company: "Maker Engine Team"
 };
 
+// =====================================
+// Application
+// =====================================
+
 project.app = {
     main: "Main",
     file: "MakerEngine",
     path: "export"
 };
 
+// =====================================
+// Window Configuration
+// =====================================
+
 project.window = {
     width: 1280,
     height: 720,
     fps: 60,
     background: 0x000000,
+    hardware: true,
     resizable: true,
     vsync: true,
     antialiasing: 4
 };
 
+// =====================================
+// Sources
+// =====================================
+
 project.sources.push("source");
 
-project.assets.push(new Asset("assets"));
-project.assets.push(new Asset("mods"));
-
-project.assets.push(new Asset("arts/icon.png"));
-
-project.icons.push("arts/icon.png");
+// =====================================
+// Haxe Libraries
+// =====================================
 
 project.haxelibs.push(new Haxelib("lime"));
 project.haxelibs.push(new Haxelib("openfl"));
 
+// =====================================
+// Engine Defines
+// =====================================
+
 project.defines.set("maker_engine", "true");
-project.defines.set("desktop", "true");
+project.defines.set("platform_windows", "true");
+
+// =====================================
+// Assets
+// =====================================
+
+if (sys.FileSystem.exists("assets"))
+{
+    project.assets.push(new Asset("assets", "assets"));
+}
+
+if (sys.FileSystem.exists("mods"))
+{
+    project.assets.push(new Asset("mods", "mods"));
+}
+
+// Engine icon
+if (sys.FileSystem.exists("arts/icon.png"))
+{
+    project.assets.push(new Asset("arts/icon.png", "icon.png"));
+    project.icons.push("arts/icon.png");
+}
+
+// =====================================
+// Debug / Release configuration
+// =====================================
+
+if (project.target == "windows")
+{
+    project.defines.set("windows_build", "true");
+}
+
+// =====================================
+// Engine Build Info
+// =====================================
+
+project.defines.set("engine_name", "MakerEngine");
+project.defines.set("engine_version", "0.1.0");
 
 return project;
