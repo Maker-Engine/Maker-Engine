@@ -2,12 +2,12 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+   branches: [ main ]
   pull_request:
 
 jobs:
 
-  build-windows:
+  windows:
     runs-on: windows-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
           name: MakerEngine-Windows
           path: export/windows/bin
 
-  build-android:
+  android:
     runs-on: ubuntu-latest
 
     steps:
@@ -59,15 +59,24 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install Android NDK
+        run: |
+          sdkmanager "ndk;25.2.9519653"
+
+      - name: Set Android Environment
+        run: |
+          echo "ANDROID_SDK=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+
       - name: Setup Lime Android
         run: |
           haxelib run lime setup android
 
-      - name: Build Android APK
+      - name: Build Android
         run: |
           haxelib run lime build android -release
 
-      - name: Upload Android APK
+      - name: Upload Android Build
         uses: actions/upload-artifact@v4
         with:
           name: MakerEngine-Android
